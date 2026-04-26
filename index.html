@@ -33,6 +33,15 @@
 
   <!-- FILTER BAR -->
   <div class="filter-bar fade-up fade-up-d1">
+  
+    <div class="filter-label">Filter :</div>
+
+    <button class="filter-chip active">All</button>
+    <button class="filter-chip">Electronics</button>
+    <button class="filter-chip">Fashion</button>
+    <button class="filter-chip">Sports</button>
+    <button class="filter-chip">Books</button>
+
     <div class="sort-wrap">
       <select class="sort-select" id="sortSelect" onchange="renderProducts()">
         <option value="default">Sort: Default</option>
@@ -59,7 +68,7 @@
       return 'Rp ' + n.toLocaleString('id-ID');
     }
 
-    // Helper: ambil gambar pertama, support array maupun string
+    // ambil gambar pertama
     function getThumb(p) {
       return Array.isArray(p.image) ? p.image[0] : p.image;
     }
@@ -137,6 +146,17 @@
       document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
       toggle.textContent = isDark ? '🌙' : '☀️';
       localStorage.setItem('bluanja_theme', isDark ? 'light' : 'dark');
+    });
+  </script>
+
+  <script>
+    const chips = document.querySelectorAll('.filter-chip');
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
     });
   </script>
 
