@@ -43,11 +43,9 @@
   <!-- DETAIL LAYOUT -->
   <div class="detail-layout">
 
-    <!-- LEFT: IMAGE — diisi oleh JS -->
+    <!-- LEFT: IMAGE -->
     <div class="detail-img-col fade-up fade-up-d1">
-      <div class="detail-main-img" id="mainImgWrap">
-        <!-- Diisi JS -->
-      </div>
+      <div class="detail-main-img" id="mainImgWrap"></div>
       <div class="detail-thumbs" id="thumbsRow"></div>
     </div>
 
@@ -79,105 +77,11 @@
         🛒 ADD TO CART
       </button>
     </div>
+
   </div>
 
   <script src="js/data.js"></script>
-  <script>
-    function updateCartBadge() {
-      const cart = JSON.parse(localStorage.getItem('bluanja_cart') || '[]');
-      document.getElementById('cartBadge').textContent = cart.reduce((s, i) => s + i.qty, 0);
-    }
-
-    // Helper: selalu kembalikan array gambar
-    function getImages(p) {
-      if (Array.isArray(p.image)) return p.image;
-      if (typeof p.image === 'string') return [p.image];
-      return [];
-    }
-
-    function setMainImg(src, alt) {
-      document.getElementById('mainImgWrap').innerHTML = `
-        <img src="${src}" alt="${alt}"
-             style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius)"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <span style="font-size:80px;display:none;align-items:center;justify-content:center;width:100%;height:100%;">📦</span>
-      `;
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    const product = products.find(p => p.id === parseInt(params.get('id')));
-    let qty = 1;
-
-    function changeQty(delta) {
-      if (!product) return;
-      qty = Math.max(1, Math.min(qty + delta, product.stock));
-      document.getElementById('qtyVal').textContent = qty;
-    }
-
-    function addToCart() {
-      if (!product) return;
-      let cart = JSON.parse(localStorage.getItem('bluanja_cart') || '[]');
-      const idx = cart.findIndex(i => i.id === product.id);
-      if (idx > -1) cart[idx].qty += qty;
-      else cart.push({ id: product.id, qty });
-      localStorage.setItem('bluanja_cart', JSON.stringify(cart));
-      updateCartBadge();
-      const btn = document.getElementById('addBtn');
-      btn.textContent = '✓ Ditambahkan ke Keranjang!';
-      setTimeout(() => btn.innerHTML = '🛒 ADD TO CART', 1500);
-    }
-
-    function selectThumb(el, imgSrc) {
-      document.querySelectorAll('.detail-thumb').forEach(t => t.classList.remove('active'));
-      el.classList.add('active');
-      setMainImg(imgSrc, product.name);
-    }
-
-    if (product) {
-      const images = getImages(product);
-
-      document.title = product.name + ' — BLUANJA★';
-      document.getElementById('bcCategory').textContent = product.category;
-      document.getElementById('bcName').textContent = product.name;
-      document.getElementById('detailCat').textContent = product.category;
-      document.getElementById('detailName').textContent = product.name;
-      document.getElementById('detailPrice').textContent = 'Rp ' + product.price.toLocaleString('id-ID');
-      document.getElementById('detailRating').textContent = product.rating;
-      document.getElementById('detailReviews').textContent = product.reviews + ' reviews';
-      document.getElementById('detailDesc').textContent = product.description;
-      document.getElementById('detailStock').textContent = product.stock;
-
-      // Tampilkan gambar utama
-      setMainImg(images[0], product.name);
-
-      // Tampilkan thumbnails (hanya jika ada lebih dari 1 gambar)
-      if (images.length > 1) {
-        document.getElementById('thumbsRow').innerHTML = images.map((img, i) => `
-          <div class="detail-thumb ${i === 0 ? 'active' : ''}" onclick="selectThumb(this, '${img}')">
-            <img src="${img}" alt="thumb ${i+1}"
-                 style="width:100%;height:100%;object-fit:cover;border-radius:7px"
-                 onerror="this.style.display='none'">
-          </div>
-        `).join('');
-      }
-
-    } else {
-      document.getElementById('detailName').textContent = 'Produk tidak ditemukan';
-    }
-
-    updateCartBadge();
-  </script>
-
-  <script>
-    const toggle = document.getElementById('themeToggle');
-    if (localStorage.getItem('bluanja_theme') === 'dark') toggle.textContent = '☀️';
-    toggle.addEventListener('click', () => {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-      toggle.textContent = isDark ? '🌙' : '☀️';
-      localStorage.setItem('bluanja_theme', isDark ? 'light' : 'dark');
-    });
-  </script>
+  <script src="js/main.js"></script>
 
 </body>
 </html>

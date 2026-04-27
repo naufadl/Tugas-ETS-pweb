@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@600;700&display=swap');
 
-/* ===== CSS VARIABLES — LIGHT MODE ===== */
+/*CSS VARIABLES — LIGHT MODE*/
 :root {
   --blue:        #6b9fff;
   --blue-mid:    #89b3ff;
@@ -26,7 +26,7 @@
   --toggle-bg:   #e8edff;
 }
 
-/* ===== DARK MODE VARIABLES ===== */
+/*DARK MODE VARIABLES*/
 [data-theme="dark"] {
   --blue:        #89b3ff;
   --blue-mid:    #aac8ff;
@@ -49,12 +49,12 @@
   --toggle-bg:   #2e3150;
 }
 
-/* ===== THEME TRANSITION ===== */
+/*THEME TRANSITION*/
 *, *::before, *::after {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease, box-shadow 0.3s ease;
 }
 
-/* ===== THEME TOGGLE BUTTON ===== */
+/*THEME TOGGLE BUTTON*/
 .theme-toggle {
   width: 40px;
   height: 40px;
@@ -73,7 +73,7 @@
   transform: scale(1.1) rotate(15deg);
 }
 
-/* ===== RESET ===== */
+/*RESET*/
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -87,7 +87,7 @@ a { text-decoration: none; color: inherit; }
 button { font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; outline: none; }
 img { display: block; max-width: 100%; }
 
-/* ===== NAVBAR ===== */
+/*NAVBAR*/
 .navbar {
   position: sticky;
   top: 0;
@@ -180,7 +180,7 @@ img { display: block; max-width: 100%; }
   border: 1.5px solid white;
 }
 
-/* ===== BREADCRUMB ===== */
+/*BREADCRUMB*/
 .breadcrumb {
   padding: 14px 36px;
   font-size: 13px;
@@ -197,7 +197,7 @@ img { display: block; max-width: 100%; }
 .breadcrumb a:hover { color: var(--purple); }
 .breadcrumb .sep { color: var(--border); }
 
-/* ===== ANIMATIONS ===== */
+/*ANIMATIONS*/
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -208,7 +208,7 @@ img { display: block; max-width: 100%; }
 .fade-up-d3 { animation-delay: 0.19s; }
 .fade-up-d4 { animation-delay: 0.26s; }
 
-/* ===== FILTER BAR ===== */
+/*FILTER BAR*/
 .filter-bar {
   background: var(--white);
   border-bottom: 1.5px solid var(--border);
@@ -280,7 +280,7 @@ img { display: block; max-width: 100%; }
 }
 .sort-select:focus { outline: none; border-color: var(--blue-mid); }
 
-/* ===== PRODUCT GRID ===== */
+/*PRODUCT GRID*/
 .products-section {
   padding: 28px 36px 56px;
 }
@@ -290,7 +290,7 @@ img { display: block; max-width: 100%; }
   gap: 20px;
 }
 
-/* ===== PRODUCT CARD ===== */
+/*PRODUCT CARD*/
 .product-card {
   background: var(--surface);
   border-radius: var(--radius);
@@ -375,7 +375,7 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 4px 16px rgba(107,159,255,0.35);
 }
 
-/* ===== QTY CONTROL ===== */
+/*QTY CONTROL*/
 .qty-control {
   display: flex;
   align-items: center;
@@ -407,7 +407,7 @@ img { display: block; max-width: 100%; }
   text-align: center;
 }
 
-/* ===== DETAIL PAGE ===== */
+/*DETAIL PAGE*/
 .detail-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -528,7 +528,7 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 10px 32px rgba(107,159,255,0.42);
 }
 
-/* ===== CART PAGE ===== */
+/*CART PAGE*/
 .cart-layout {
   display: grid;
   grid-template-columns: 1fr 360px;
@@ -613,7 +613,7 @@ img { display: block; max-width: 100%; }
 }
 .cart-remove-btn:hover { color: #ff7eb3; background: #fff0f6; }
 
-/* ===== SUMMARY PANEL ===== */
+/*SUMMARY PANEL*/
 .cart-summary {
   background: var(--surface);
   border: 1.5px solid var(--border);
@@ -690,7 +690,7 @@ img { display: block; max-width: 100%; }
 }
 .continue-link:hover { color: var(--purple); }
 
-/* ===== EMPTY STATE ===== */
+/*EMPTY STATE*/
 .empty-state {
   text-align: center;
   padding: 72px 32px;
@@ -711,3 +711,34 @@ img { display: block; max-width: 100%; }
   transition: opacity 0.2s, transform 0.2s;
 }
 .empty-state a:hover { opacity: 0.9; transform: translateY(-2px); }
+
+/*WISHLIST BUTTON (card)*/
+.card-wish {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  border: 1.5px solid var(--border);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  backdrop-filter: blur(6px);
+  transition: color 0.2s, background 0.2s, transform 0.2s, border-color 0.2s;
+  z-index: 2;
+}
+.card-wish:hover {
+  transform: scale(1.15);
+  color: #ff6b9f;
+  border-color: #ff6b9f;
+}
+.card-wish.active {
+  color: #ff6b9f;
+  border-color: #ff6b9f;
+  background: #fff0f6;
+}

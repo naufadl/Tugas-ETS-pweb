@@ -19,7 +19,7 @@
     </a>
     <div class="nav-search">
       <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Search here..." id="searchInput" oninput="filterProducts()">
+      <input type="text" id="searchInput" placeholder="Search here...">
     </div>
     <div class="nav-actions">
       <img src="assets/profile.png" class="icon">
@@ -33,17 +33,14 @@
 
   <!-- FILTER BAR -->
   <div class="filter-bar fade-up fade-up-d1">
-  
     <div class="filter-label">Filter :</div>
-
     <button class="filter-chip active">All</button>
     <button class="filter-chip">Electronics</button>
     <button class="filter-chip">Fashion</button>
     <button class="filter-chip">Sports</button>
     <button class="filter-chip">Books</button>
-
     <div class="sort-wrap">
-      <select class="sort-select" id="sortSelect" onchange="renderProducts()">
+      <select class="sort-select" id="sortSelect">
         <option value="default">Sort: Default</option>
         <option value="price-asc">Harga: Terendah</option>
         <option value="price-desc">Harga: Tertinggi</option>
@@ -58,107 +55,7 @@
   </section>
 
   <script src="js/data.js"></script>
-  <script>
-    function updateCartBadge() {
-      const cart = JSON.parse(localStorage.getItem('bluanja_cart') || '[]');
-      document.getElementById('cartBadge').textContent = cart.reduce((s, i) => s + i.qty, 0);
-    }
-
-    function formatRp(n) {
-      return 'Rp ' + n.toLocaleString('id-ID');
-    }
-
-    // ambil gambar pertama
-    function getThumb(p) {
-      return Array.isArray(p.image) ? p.image[0] : p.image;
-    }
-
-    let currentSearch = '';
-
-    function filterProducts() {
-      currentSearch = document.getElementById('searchInput').value.toLowerCase();
-      renderProducts();
-    }
-
-    function renderProducts() {
-      const sort = document.getElementById('sortSelect').value;
-      let filtered = products.filter(p => p.name.toLowerCase().includes(currentSearch));
-
-      if (sort === 'price-asc') filtered.sort((a, b) => a.price - b.price);
-      else if (sort === 'price-desc') filtered.sort((a, b) => b.price - a.price);
-      else if (sort === 'rating') filtered.sort((a, b) => b.rating - a.rating);
-
-      const grid = document.getElementById('productsGrid');
-      if (filtered.length === 0) {
-        grid.innerHTML = `
-          <div style="grid-column:1/-1;text-align:center;padding:72px;color:var(--text-muted);">
-            <div style="font-size:48px;margin-bottom:12px;">🔍</div>
-            <p style="font-size:16px;">Produk tidak ditemukan</p>
-          </div>`;
-        return;
-      }
-
-      grid.innerHTML = filtered.map((p, i) => `
-        <div class="product-card fade-up" style="animation-delay:${i * 0.05}s"
-             onclick="location.href='detail.html?id=${p.id}'">
-          <div class="card-img-wrap">
-            <img src="${getThumb(p)}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <span style="font-size:56px;display:none;align-items:center;justify-content:center;width:100%;height:100%;">📦</span>
-          </div>
-          <div class="card-body">
-            <div class="card-cat">${p.category}</div>
-            <div class="card-name">${p.name}</div>
-            <div class="card-price">${formatRp(p.price)}</div>
-            <div class="card-rating">
-              <span class="star">★</span> ${p.rating} <span>(${p.reviews})</span>
-            </div>
-            <button class="card-add-btn" onclick="event.stopPropagation(); addToCart(${p.id}, event)">
-              + Add to Cart
-            </button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function addToCart(id, e) {
-      let cart = JSON.parse(localStorage.getItem('bluanja_cart') || '[]');
-      const idx = cart.findIndex(i => i.id === id);
-      if (idx > -1) cart[idx].qty++;
-      else cart.push({ id, qty: 1 });
-      localStorage.setItem('bluanja_cart', JSON.stringify(cart));
-      updateCartBadge();
-      const btn = e.target;
-      btn.textContent = '✓ Ditambahkan!';
-      setTimeout(() => btn.textContent = '+ Add to Cart', 1200);
-    }
-
-    updateCartBadge();
-    renderProducts();
-  </script>
-
-  <script>
-    const toggle = document.getElementById('themeToggle');
-    const saved = localStorage.getItem('bluanja_theme') || 'light';
-    if (saved === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); toggle.textContent = '☀️'; }
-    toggle.addEventListener('click', () => {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-      toggle.textContent = isDark ? '🌙' : '☀️';
-      localStorage.setItem('bluanja_theme', isDark ? 'light' : 'dark');
-    });
-  </script>
-
-  <script>
-    const chips = document.querySelectorAll('.filter-chip');
-
-    chips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        chips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-      });
-    });
-  </script>
+  <script src="js/main.js"></script>
 
 </body>
 </html>
